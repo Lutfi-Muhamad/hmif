@@ -119,124 +119,8 @@
         </div>
     </div>
 
-    <div class="w-full bg-gray-100" aria-labelledby="recent-events-heading">
-        <div class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-16 md:py-20 lg:py-28">
-            <div class="flex flex-col gap-4 items-start justify-start w-full md:w-[768px] mb-12 md:mb-20">
-                <span class="text-gray-600 text-base leading-[150%] font-semibold">Recent Events</span>
-                <h2 id="recent-events-heading"
-                    class="text-gray-800 text-3xl md:text-4xl lg:text-[48px] leading-[120%] tracking-[-0.01em] font-normal">
-                    Latest Activities
-                </h2>
-            </div>
-            <div class="w-full">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                    <!-- Card 1 -->
-                    <div
-                        class="rounded-2xl flex flex-col gap-0 items-start justify-start bg-white shadow-md overflow-hidden">
-                        <img src="{{ asset('images/temptest.jpeg') }}" alt="Web Development Workshop"
-                            class="w-full h-[200px] md:h-[300px] object-cover">
-                        <div class="flex flex-col gap-6 items-start justify-start w-full p-4 md:p-6">
-                            <div class="flex flex-col gap-2 items-start justify-start w-full">
-                                <div class="border border-transparent rounded-full bg-blue-100 px-2 py-1">
-                                    <span class="text-blue-700 text-sm leading-[150%] font-semibold">Workshop</span>
-                                </div>
-                                <h3 class="text-gray-800 text-xl md:text-2xl leading-[140%] tracking-[-0.01em] font-normal">
-                                    Web Development Workshop
-                                </h3>
-                                <p class="text-gray-600 text-base leading-[150%] font-normal">
-                                    Learn the fundamentals of web development with hands-on experience.
-                                </p>
-                            </div>
-                            <div class="flex flex-row gap-4 items-center justify-start w-full">
-                                <img src="{{ asset('images/avatar.png') }}" alt="Speaker John Doe"
-                                    class="w-10 h-10 md:w-12 md:h-12 object-cover rounded-full">
-                                <div class="flex flex-col">
-                                    <span class="text-gray-800 text-sm leading-[150%] font-semibold">John Doe</span>
-                                    <div class="flex flex-row gap-2 items-center">
-                                        <span class="text-gray-500 text-xs md:text-sm leading-[150%] font-normal">Jan 11,
-                                            2024</span>
-                                        <span class="text-gray-500 text-xs md:text-sm leading-[150%] font-normal">•</span>
-                                        <span class="text-gray-500 text-xs md:text-sm leading-[150%] font-normal">5 min
-                                            read</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Card 2 -->
-                    <div
-                        class="rounded-2xl flex flex-col gap-0 items-start justify-start bg-white shadow-md overflow-hidden">
-                        <img src="{{ asset('images/temptest.jpeg') }}" alt="Data Science Seminar"
-                            class="w-full h-[200px] md:h-[300px] object-cover">
-                        <div class="flex flex-col gap-6 items-start justify-start w-full p-4 md:p-6">
-                            <div class="flex flex-col gap-2 items-start justify-start w-full">
-                                <div class="border border-transparent rounded-full bg-blue-100 px-2 py-1">
-                                    <span class="text-blue-700 text-sm leading-[150%] font-semibold">Seminar</span>
-                                </div>
-                                <h3 class="text-gray-800 text-xl md:text-2xl leading-[140%] tracking-[-0.01em] font-normal">
-                                    Data Science Seminar
-                                </h3>
-                                <p class="text-gray-600 text-base leading-[150%] font-normal">
-                                    Explore the latest trends in data science with industry experts.
-                                </p>
-                            </div>
-                            <div class="flex flex-row gap-4 items-center justify-start w-full">
-                                <img src="{{ asset('images/avatar.png') }}" alt="Speaker Jane Smith"
-                                    class="w-10 h-10 md:w-12 md:h-12 object-cover rounded-full">
-                                <div class="flex flex-col">
-                                    <span class="text-gray-800 text-sm leading-[150%] font-semibold">Jane Smith</span>
-                                    <div class="flex flex-row gap-2 items-center">
-                                        <span class="text-gray-500 text-xs md:text-sm leading-[150%] font-normal">Jan 20,
-                                            2024</span>
-                                        <span class="text-gray-500 text-xs md:text-sm leading-[150%] font-normal">•</span>
-                                        <span class="text-gray-500 text-xs md:text-sm leading-[150%] font-normal">7 min
-                                            read</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card 3 -->
-                    <div
-                        class="rounded-2xl flex flex-col gap-0 items-start justify-start bg-white shadow-md overflow-hidden">
-                        <img src="{{ asset('images/temptest.jpeg') }}" alt="Hackathon 2024"
-                            class="w-full h-[200px] md:h-[300px] object-cover">
-                        <div class="flex flex-col gap-6 items-start justify-start w-full p-4 md:p-6">
-                            <div class="flex flex-col gap-2 items-start justify-start w-full">
-                                <div class="border border-transparent rounded-full bg-blue-100 px-2 py-1">
-                                    <span class="text-blue-700 text-sm leading-[150%] font-semibold">Hackathon</span>
-                                </div>
-                                <h3
-                                    class="text-gray-800 text-xl md:text-2xl leading-[140%] tracking-[-0.01em] font-normal">
-                                    Hackathon 2024
-                                </h3>
-                                <p class="text-gray-600 text-base leading-[150%] font-normal">
-                                    Collaborate and innovate in our annual coding competition.
-                                </p>
-                            </div>
-                            <div class="flex flex-row gap-4 items-center justify-start w-full">
-                                <img src="{{ asset('images/avatar.png') }}" alt="Speaker Alex Brown"
-                                    class="w-10 h-10 md:w-12 md:h-12 object-cover rounded-full">
-                                <div class="flex flex-col">
-                                    <span class="text-gray-800 text-sm leading-[150%] font-semibold">Alex Brown</span>
-                                    <div class="flex flex-row gap-2 items-center">
-                                        <span class="text-gray-500 text-xs md:text-sm leading-[150%] font-normal">Feb 1,
-                                            2024</span>
-                                        <span class="text-gray-500 text-xs md:text-sm leading-[150%] font-normal">•</span>
-                                        <span class="text-gray-500 text-xs md:text-sm leading-[150%] font-normal">10 min
-                                            read</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    {{-- Event backend --}}
     <div class="w-full bg-gray-100" aria-labelledby="upcoming-events-heading">
         <div class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-16 md:py-20 lg:py-28">
             <div class="flex flex-col gap-4 items-center justify-start w-full md:w-[768px] mx-auto mb-12 md:mb-20">
@@ -252,81 +136,80 @@
 
             <!-- Filter Buttons -->
             <div class="flex justify-center mb-10">
-                <div
-                    class="overflow-x-auto flex gap-2 md:gap-4 items-center min-w-max p-1 bg-white rounded-full shadow-sm">
-                    <button
+                <div class="overflow-x-auto flex gap-2 md:gap-4 items-center min-w-max p-1 bg-white rounded-full shadow-sm">
+                    <button onclick="filterEvents(null)"
                         class="px-4 py-2 rounded-full text-sm md:text-base font-medium text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 transition-all duration-200">
                         View All
                     </button>
-                    <button
-                        class="px-4 py-2 rounded-full text-sm md:text-base font-normal text-gray-500 hover:text-white hover:bg-gradient-to-r hover:from-blue-400 hover:to-blue-500 transition-all duration-200">
-                        Workshops
+                    <button onclick="filterEvents('A')"
+                        class="px-4 py-2 rounded-full text-sm md:text-base font-medium text-gray-500 hover:text-white hover:bg-gradient-to-r hover:from-blue-400 hover:to-blue-500 transition-all duration-200">
+                        Category A
                     </button>
-                    <button
-                        class="px-4 py-2 rounded-full text-sm md:text-base font-normal text-gray-500 hover:text-white hover:bg-gradient-to-r hover:from-blue-400 hover:to-blue-500 transition-all duration-200">
-                        Seminars
+                    <button onclick="filterEvents('B')"
+                        class="px-4 py-2 rounded-full text-sm md:text-base font-medium text-gray-500 hover:text-white hover:bg-gradient-to-r hover:from-blue-400 hover:to-blue-500 transition-all duration-200">
+                        Category B
                     </button>
-                    <button
-                        class="px-4 py-2 rounded-full text-sm md:text-base font-normal text-gray-500 hover:text-white hover:bg-gradient-to-r hover:from-blue-400 hover:to-blue-500 transition-all duration-200">
-                        Hackathons
-                    </button>
-                    <button
-                        class="px-4 py-2 rounded-full text-sm md:text-base font-normal text-gray-500 hover:text-white hover:bg-gradient-to-r hover:from-blue-400 hover:to-blue-500 transition-all duration-200">
-                        Networking
+                    <button onclick="filterEvents('C')"
+                        class="px-4 py-2 rounded-full text-sm md:text-base font-medium text-gray-500 hover:text-white hover:bg-gradient-to-r hover:from-blue-400 hover:to-blue-500 transition-all duration-200">
+                        Category C
                     </button>
                 </div>
             </div>
 
-            <!-- Event Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 max-w-5xl mx-auto">
-                <!-- Card 1 -->
-                <div
-                    class="bg-white rounded-2xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
-                    <img src="{{ asset('images/temptest.jpeg') }}" alt="Untirta IO Workshop"
-                        class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <div class="flex flex-wrap items-center gap-2 mb-3">
-                            <h4 class="text-xl md:text-2xl font-semibold text-gray-800">Untirta IO</h4>
-                            <span class="text-xs font-semibold text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
-                                Workshop
-                            </span>
-                        </div>
-                        <div class="flex flex-wrap gap-3 text-sm text-gray-500 mb-4">
-                            <span>Feb 15, 2024</span>
-                            <span>•</span>
-                            <span>1:00 PM - 4:00 PM</span>
-                        </div>
-                        <p class="text-gray-600 text-sm md:text-base">
-                            Learn the principles of UI/UX design and create user-friendly interfaces.
-                        </p>
-                    </div>
-                </div>
 
-                <!-- Card 2 -->
-                <div
-                    class="bg-white rounded-2xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
-                    <img src="{{ asset('images/temptest.jpeg') }}" alt="UI/UX Design Workshop"
-                        class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <div class="flex flex-wrap items-center gap-2 mb-3">
-                            <h4 class="text-xl md:text-2xl font-semibold text-gray-800">UI/UX Design Workshop</h4>
-                            <span class="text-xs font-semibold text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
-                                Workshop
-                            </span>
-                        </div>
-                        <div class="flex flex-wrap gap-3 text-sm text-gray-500 mb-4">
-                            <span>Feb 15, 2024</span>
-                            <span>•</span>
-                            <span>1:00 PM - 4:00 PM</span>
-                        </div>
-                        <p class="text-gray-600 text-sm md:text-base">
-                            Learn the principles of UI/UX design and create user-friendly interfaces.
-                        </p>
-                    </div>
+
+            <div id="event-list" class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 max-w-5xl mx-auto">
+                @include('components.event-cards', ['events' => $events])
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="w-full bg-gray-100" aria-labelledby="recent-events-heading">
+        <div class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-16 md:py-20 lg:py-28">
+            <div class="flex flex-col gap-4 items-start justify-start w-full md:w-[768px] mb-12 md:mb-20">
+                <span class="text-gray-600 text-base leading-[150%] font-semibold">Recent Articles</span>
+                <h2 id="recent-events-heading"
+                    class="text-gray-800 text-3xl md:text-4xl lg:text-[48px] leading-[120%] tracking-[-0.01em] font-normal">
+                    Latest Articles
+                </h2>
+            </div>
+            <div class="w-full">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                    {{-- Loop untuk menampilkan artikel --}}
+                    @foreach ($articles as $article)
+                        <a href="{{ route('articles.show', $article->id) }}"
+                            class="bg-white rounded-2xl shadow-md overflow-hidden transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg block">
+                            @if ($article->image)
+                                <img src="{{ asset('storage/' . $article->image) }}" alt="Image"
+                                    class="w-full h-48 object-cover">
+                            @endif
+
+                            <div class="p-6">
+                                <div class="flex flex-wrap items-center gap-2 mb-3">
+                                    <h4 class="text-xl md:text-2xl font-semibold text-gray-800">{{ $article->title }}</h4>
+                                    <span
+                                        class="text-xs font-semibold text-blue-600 bg-blue-100 px-2 py-1 rounded-full">Artikel</span>
+                                </div>
+
+                                <div class="flex flex-wrap gap-3 text-sm text-gray-500 mb-4">
+                                    <span>{{ $article->created_at->format('d M Y') }}</span>
+                                    <span>•</span>
+                                    <span>{{ $article->created_at->format('H:i') }}</span>
+                                </div>
+
+                                <p class="text-gray-600 text-sm md:text-base">
+                                    {{ Str::limit($article->content, 150) }}
+                                </p>
+                            </div>
+                        </a>
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
+
 
     <div class="w-full bg-gray-100" aria-labelledby="testimonial-heading">
         <div class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-16 md:py-20 lg:py-28">
@@ -559,4 +442,24 @@
             </div>
         </div>
     </div>
+
+
+    {{-- untuk filter --}}
+    <script>
+        function filterEvents(category) {
+            let url = "{{ route('events.filter') }}";
+            if (category) {
+                url += '?category=' + category;
+            }
+
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('event-list').innerHTML = data.html;
+                })
+                .catch(err => {
+                    console.error('Error:', err);
+                });
+        }
+    </script>
 @endsection
