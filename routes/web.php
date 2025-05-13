@@ -7,11 +7,21 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\EventController;
 
-// Rute home dengan logic untuk menampilkan modal login
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+use App\Models\Article;
+
+
+// Route::get('/', function () {
+//     // Mengambil artikel terbaru
+//     $articles = Article::latest()->get();
+
+//     // Menampilkan view dengan artikel yang dikirim
+//     return view('welcome', compact('articles'));
+// })->name('home');
+
+Route::get('/', [EventController::class, 'showEvents'])->name('home');
+
 
 // Redirect /login ke / dengan flash session untuk menampilkan modal login
 Route::get('/login', function () {
@@ -43,7 +53,7 @@ Route::get('/dashboard', function () {
             return redirect()->route('user.dashboard'); // Perbaikan di sini
         }
     }
-    
+
     return redirect()->route('home');
 })->middleware('auth')->name('dashboard');
 
@@ -56,3 +66,30 @@ Route::get('/about', function () {
 Route::get('/team', function () {
     return view('team');
 })->name('team');
+
+
+// artikel admin
+use App\Http\Controllers\ArticlesController;
+
+Route::get('/admin/dashboard', [ArticlesController::class, 'index'])->name('admin.dashboard');
+Route::post('/admin/articles', [ArticlesController::class, 'store'])->name('admin.articles.store');
+
+// Route untuk edit artikel
+Route::get('/admin/articles/{article}/edit', [ArticlesController::class, 'edit'])->name('admin.articles.edit'); // Tampilkan form edit artikel
+
+// Route untuk update artikel
+Route::put('/admin/articles/{article}', [ArticlesController::class, 'update'])->name('admin.articles.update'); // Update artikel
+
+// Route untuk hapus artikel
+Route::delete('/admin/articles/{article}', [ArticlesController::class, 'destroy'])->name('admin.articles.destroy'); // Hapus artikel
+
+// routes/web.php artikel show
+Route::get('/articles/{id}', [ArticlesController::class, 'show'])->name('articles.show');
+
+// rute tambahkan event
+// routes/web.php
+
+Route::post('/admin/events', [EventController::class, 'store'])->name('admin.events.store');
+
+// untuk filter kategori
+Route::get('/events/filter', [EventController::class, 'filter'])->name('events.filter');
