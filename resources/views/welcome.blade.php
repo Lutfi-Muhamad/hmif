@@ -453,7 +453,7 @@
                         <p class="text-gray-600 text-base md:text-lg leading-[150%] font-normal mb-6">
                             Become a part of our community and start your journey with HMIF today.
                         </p>
-                        <a href=""
+                        <a href="/registrasi"
                             class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-200 font-medium">
                             Join Now
                             <svg class="w-5 h-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">

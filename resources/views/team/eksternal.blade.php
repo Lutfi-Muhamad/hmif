@@ -38,15 +38,9 @@
                 <div class="torn-paper-bottom h-8"></div>
             </div>
             <div class="px-6 py-4">
-                <h4 class="text-xl font-bold text-gray-800">Ketua Departemen Eksternal</h4>
-                <p class="text-gray-600 mb-4">Bertanggung jawab mengkoordinasikan tim Eksternal untuk mengembangkan
-                    solusi inovatif.</p>
-                <div class="flex justify-end">
-                    {{-- <a href="#" class="inline-flex items-center text-white bg-[#0077CC] px-4 py-2 rounded-full shadow-sm hover:bg-[#00619e] transition">
-                <i class="fas fa-info-circle mr-2"></i>
-                <span>Detail</span>
-              </a> --}}
-                </div>
+                <h4 class="text-xl font-bold text-gray-800">Ketua Dept. Eksternal</h4>
+                <p class="text-gray-600 mb-4">Periode 2024</p>
+                
             </div>
         </div>
 

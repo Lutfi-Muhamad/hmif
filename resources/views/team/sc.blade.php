@@ -50,7 +50,7 @@
                     <div class="flex gap-4 items-center mt-4 sm:mt-0">
                         <div class="flex items-center text-gray-700 bg-gray-100 px-4 py-2 rounded-full shadow-sm">
                             <i class="fas fa-user-tie mr-2 text-[#0077CC]"></i>
-                            <span>7 Anggota</span>
+                            <span>Anggota</span>
                         </div>
                         {{-- <a href="#" class="inline-flex items-center text-white bg-[#0077CC] px-4 py-2 rounded-full shadow-sm hover:bg-[#00619e] transition">
                   <i class="fas fa-info-circle mr-2"></i>
@@ -140,7 +140,7 @@
                     <div class="flex gap-4 items-center mt-4 sm:mt-0">
                         <div class="flex items-center text-gray-700 bg-gray-100 px-4 py-2 rounded-full shadow-sm">
                             <i class="fas fa-user-friends mr-2 text-[#0077CC]"></i>
-                            <span>3 Anggota</span>
+                            <span>Anggota</span>
                         </div>
                         {{-- <a href="#"
                             class="inline-flex items-center text-white bg-[#0077CC] px-4 py-2 rounded-full shadow-sm hover:bg-[#00619e] transition">

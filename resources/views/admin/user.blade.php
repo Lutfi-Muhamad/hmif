@@ -89,7 +89,7 @@
                 </div>
             </div>
         @endif
-
+        {{-- Table User Management --}}
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
@@ -117,15 +117,20 @@
                                 <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ $user->name }}</td>
                                 <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ $user->email }}</td>
                                 <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">
-                                    @if ($user->hasRole('admin'))
+                                    @if ($user->hasRole('superadmin'))
                                         <span
                                             class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                            Admin
+                                            Super Admin
                                         </span>
-                                    @elseif($user->hasRole('editor'))
+                                    @elseif($user->hasRole('admin'))
                                         <span
                                             class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                            Editor
+                                            Admin
+                                        </span>
+                                    @elseif($user->hasRole('hmif'))
+                                        <span
+                                            class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                            Anggota HMIF
                                         </span>
                                     @else
                                         <span
@@ -403,6 +408,8 @@
                                         class="block w-full border border-gray-200 dark:border-gray-600 rounded-xl py-3.5 pl-12 pr-4 bg-white/50 dark:bg-gray-700/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:placeholder-gray-400 sm:text-sm transition-all duration-200 appearance-none">
                                         <option value="user">User</option>
                                         <option value="admin">Admin</option>
+                                        <option value="superadmin">Super Admin</option>
+                                        <option value="hmif">Anggota HMIF</option>
                                     </select>
                                     <div
                                         class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-400">

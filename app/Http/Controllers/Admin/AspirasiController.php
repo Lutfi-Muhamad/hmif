@@ -16,7 +16,8 @@ class AspirasiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
+    {   
+        
         // Ambil semua aspirasi dengan pagination (ascending berdasarkan created_at)
         $aspirasi = Aspirasi::orderBy('created_at', 'asc')->paginate(10);
 

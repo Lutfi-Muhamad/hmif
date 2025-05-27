@@ -9,6 +9,7 @@
     </title>
     <link rel="icon" href="{{ asset('images/LOGO_HMIF.png') }}" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         /* Advanced hover animations for navigation links */
@@ -137,10 +138,7 @@
                                     <a href="{{ route('team') }}"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
                                         tabindex="-1">Our Team</a>
-                                    <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                        role="menuitem" tabindex="-1">History</a>
-                                    <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                        role="menuitem" tabindex="-1">Vision & Mission</a>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -168,15 +166,19 @@
                         </a>
 
                         <!-- Aspirasi Link -->
-                        <a href="{{ route('aspirasi') }}"
-                            class="nav-link text-white text-base leading-[150%] font-medium relative group px-2 py-1 overflow-hidden {{ request()->is('aspirasi*') ? 'active' : '' }}">
-                            <span
-                                class="relative z-10 transition-colors duration-300 group-hover:text-[#2a2d47]">Aspirasi</span>
-                            <span
-                                class="nav-highlight absolute bottom-0 left-0 w-full h-[2px] bg-[#f4efeb] transform origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100"></span>
-                            <span
-                                class="absolute inset-0 bg-[#f4efeb] transform origin-top transition-transform duration-300 scale-y-0 group-hover:scale-y-100 -z-0"></span>
-                        </a>
+                        @auth
+                            @if(auth()->user()->hasAnyRole(['admin', 'superadmin', 'hmif']))
+                                <a href="{{ route('aspirasi') }}"
+                                    class="nav-link text-white text-base leading-[150%] font-medium relative group px-2 py-1 overflow-hidden {{ request()->is('aspirasi*') ? 'active' : '' }}">
+                                    <span
+                                        class="relative z-10 transition-colors duration-300 group-hover:text-[#2a2d47]">Aspirasi</span>
+                                    <span
+                                        class="nav-highlight absolute bottom-0 left-0 w-full h-[2px] bg-[#f4efeb] transform origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100"></span>
+                                    <span
+                                        class="absolute inset-0 bg-[#f4efeb] transform origin-top transition-transform duration-300 scale-y-0 group-hover:scale-y-100 -z-0"></span>
+                                </a>
+                            @endif
+                        @endauth
                     </div>
                 </div>
                 <button id="mobile-menu-button"
@@ -232,18 +234,7 @@
                                 <span
                                     class="absolute inset-0 bg-[#136ca9] transform origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100 -z-0"></span>
                             </a>
-                            <a href=""
-                                class="block w-full py-3 px-4 text-white text-sm leading-[150%] font-normal relative overflow-hidden group hover:bg-white/10 transition-colors duration-300">
-                                <span class="relative z-10">History</span>
-                                <span
-                                    class="absolute inset-0 bg-[#136ca9] transform origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100 -z-0"></span>
-                            </a>
-                            <a href=""
-                                class="block w-full py-3 px-4 text-white text-sm leading-[150%] font-normal relative overflow-hidden group hover:bg-white/10 transition-colors duration-300">
-                                <span class="relative z-10">Vision & Mission</span>
-                                <span
-                                    class="absolute inset-0 bg-[#136ca9] transform origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100 -z-0"></span>
-                            </a>
+                            <!-- Add more about sublinks as needed -->
                         </div>
                     </div>
 
@@ -267,20 +258,26 @@
                         </a>
                     </div>
 
-                    <!-- Aspirasi -->
-                    <div class="w-full relative mt-2">
-                        <a href="{{ route('aspirasi') }}"
-                            class="w-full text-left py-3 px-4 text-white text-base leading-[150%] font-normal relative overflow-hidden group flex items-center gap-2 rounded-lg border-solid border-[1.5px] border-transparent transition-all duration-300 {{ request()->is('aspirasi*') ? 'bg-[#136ca9]/40' : '' }}">
-                            <span class="relative z-10 group-hover:text-white">Aspirasi</span>
-                            <span
+                    @auth
+                        @if(auth()->user()->hasAnyRole(['admin', 'superadmin', 'hmif']))
+                            <!-- Aspirasi -->
+                            <div class="w-full relative mt-2">
+                                <a href="{{ route('aspirasi') }}"
+                                class="w-full text-left py-3 px-4 text-white text-base leading-[150%] font-normal relative overflow-hidden group flex items-center gap-2 rounded-lg border-solid border-[1.5px] border-transparent transition-all duration-300 {{ request()->is('aspirasi*') ? 'bg-[#136ca9]/40' : '' }}">
+                                <span class="relative z-10 group-hover:text-white">Aspirasi</span>
+                                <span
                                 class="absolute inset-0 bg-[#136ca9] transform origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100 -z-0"></span>
-                        </a>
-                    </div>
+                            </a>
+                            </div>
+                        @endif
+                    @endauth
+
+                    
 
                     <!-- Login Button -->
                     <div class="flex flex-row gap-4 items-center justify-center w-full mt-6 mb-2">
                         @auth
-                            <a href="{{ auth()->user()->role == 'admin' ? route('admin.dashboard') : route('dashboard') }}"
+                            <a href="{{ auth()->user()->hasAnyRole(['admin', 'superadmin']) ? route('admin.dashboard') : route('dashboard') }}"
                                 class="relative overflow-hidden group border-[#2a2d47] flex flex-row gap-2 items-center justify-center px-5 py-2.5 rounded-full border-solid border-[1.5px] bg-[#f4efeb] text-[#2a2d47] text-base font-medium transition-colors duration-300 shadow-md w-full">
                                 <span class="relative z-10 group-hover:text-white">Dashboard</span>
                                 <span
@@ -331,7 +328,7 @@
         </div>
     </main>
 
-
+    {{-- Footer --}}
     <footer class="w-full bg-[#2a2d47] text-white" aria-label="Footer">
         <!-- Box-border ensures padding is included in width calculation -->
         <div class="box-border max-w-full mx-auto px-4 md:px-8 lg:px-16 py-8 md:py-12 overflow-x-hidden">
@@ -393,13 +390,7 @@
                             <a href="{{ route('team') }}"
                                 class="text-white text-xs md:text-sm leading-[150%] font-normal hover:text-[#f4efeb] transition-colors duration-200 pl-2 truncate">Our
                                 Team</a>
-                            <a href="#"
-                                class="text-white text-xs md:text-sm leading-[150%] font-normal hover:text-[#f4efeb] transition-colors duration-200 pl-2 truncate">History</a>
-                            <a href="#"
-                                class="text-white text-xs md:text-sm leading-[150%] font-normal hover:text-[#f4efeb] transition-colors duration-200 pl-2 truncate">Vision
-                                & Mission</a>
-                            <a href="#"
-                                class="text-white text-xs md:text-sm leading-[150%] font-normal hover:text-[#f4efeb] transition-colors duration-200 truncate">Events</a>
+                            
                         </div>
                     </div>
 

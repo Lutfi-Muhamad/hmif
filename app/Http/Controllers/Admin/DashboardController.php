@@ -13,7 +13,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        if (!auth()->user()->hasRole('admin')) {
+        
+        if (!auth()->user()->hasRole(['admin', 'superadmin'])) {
             return redirect('/'); // Redirect ke halaman utama jika bukan admin
         }
         return view('admin.dashboard');

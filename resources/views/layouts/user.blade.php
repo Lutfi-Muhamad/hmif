@@ -16,7 +16,9 @@
         <header class="topbar">
             <div class="topbar-content">
                 <div class="topbar-logo">
-                    <img src="{{ asset('images/LOGO_HMIF.png') }}" alt="HMIF Logo">
+                    <a href="/">
+                        <img src="{{ asset('images/LOGO_HMIF.png') }}" alt="HMIF Logo">
+                    </a>
                     <button id="menu-toggle" class="menu-toggle">
                         <i class="fas fa-bars"></i>
                     </button>

@@ -301,7 +301,7 @@
             @endif
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2">
+                <div class="lg:col-span-3">
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden p-6 md:p-8 border border-gray-100">
                         <h2
                             class="text-2xl font-bold text-gray-800 mb-8 relative after:absolute after:content-[''] after:w-20 after:h-1 after:bg-blue-600 after:-bottom-3 after:left-0">
@@ -590,48 +590,6 @@
                                 </button>
                             </div>
                         </form>
-                    </div>
-                </div>
-
-                <!-- Recent Aspirations Section -->
-                <div class="lg:col-span-1">
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden p-6 md:p-8">
-                        <h2 class="text-xl font-bold text-gray-800 mb-6">Aspirasi Terbaru</h2>
-
-                        <div class="space-y-4">
-                            @forelse ($recentAspirasi as $item)
-                                <a href="#"
-                                    class="aspirasi-card block bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition aspirasi-show-modal"
-                                    data-modal="aspirasiModal" data-id="{{ $item->id }}"
-                                    data-name="{{ $item->is_anonymous ? 'Anonim' : $item->name }}"
-                                    data-aspirasi="{{ $item->aspirasi }}" data-status="direspon"
-                                    data-date="{{ $item->created_at->format('d M Y') }}">
-                                    <div class="flex justify-between mb-2">
-                                        <span
-                                            class="font-medium text-gray-900">{{ $item->is_anonymous ? 'Anonim' : $item->name }}</span>
-                                        <span
-                                            class="text-sm text-gray-500">{{ $item->created_at->format('d M Y') }}</span>
-                                    </div>
-                                    <p class="text-gray-600 text-sm mb-2">{{ Str::limit($item->aspirasi, 100) }}</p>
-                                    <div class="flex justify-between items-center mt-2">
-                                        <span
-                                            class="text-xs px-2 py-1 bg-green-100 text-green-800 rounded-full">Direspon</span>
-                                        <span class="text-blue-600 text-sm font-medium">Baca selengkapnya →</span>
-                                    </div>
-                                </a>
-                            @empty
-                                <div class="text-center py-6">
-                                    <svg class="w-10 h-10 text-gray-400 mx-auto mb-3" fill="none"
-                                        stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4">
-                                        </path>
-                                    </svg>
-                                    <p class="text-gray-500">Belum ada aspirasi yang telah direspon.</p>
-                                </div>
-                            @endforelse
-                        </div>
-
                     </div>
                 </div>
             </div>

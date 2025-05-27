@@ -107,17 +107,7 @@
                             <h4 class="text-xl font-bold text-gray-800">Ketua & Wakil HMIF</h4>
                             <p class="text-gray-600">Periode 2024</p>
                         </div>
-                        <div class="flex gap-4 items-center mt-4 sm:mt-0">
-                            <div class="flex items-center text-gray-700 bg-gray-100 px-4 py-2 rounded-full shadow-sm">
-                                <i class="fas fa-user-friends mr-2 text-[#0077CC]"></i>
-                                <span>2 Anggota</span>
-                            </div>
-                            {{-- <a href="#"
-                                class="inline-flex items-center text-white bg-[#0077CC] px-4 py-2 rounded-full shadow-sm hover:bg-[#00619e] transition">
-                                <i class="fas fa-info-circle mr-2"></i>
-                                <span>Detail</span>
-                            </a> --}}
-                        </div>
+                        
                     </div>
                 </div>
             </div>

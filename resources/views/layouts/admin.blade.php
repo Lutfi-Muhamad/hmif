@@ -16,11 +16,13 @@
         <header class="topbar">
             <div class="topbar-content">
                 <div class="topbar-logo">
-                    <img src="{{ asset('images/LOGO_HMIF.png') }}" alt="HMIF Logo">
-                    <button id="menu-toggle" class="menu-toggle">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
+                    <a href="/">
+                        <img src="{{ asset('images/LOGO_HMIF.png') }}" alt="HMIF Logo">
+                    </a>
+                        <button id="menu-toggle" class="menu-toggle">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
 
                 <div class="profile-dropdown">
                     <button id="profile-dropdown-toggle" class="profile-button">
@@ -61,11 +63,19 @@
                             <span class="nav-text">Dashboard</span>
                         </a>
                     </li>
+                    @if(auth()->user()->hasRole('superadmin'))                   
                     <li class="nav-item">
                         <a href="{{ route('admin.users.index') }}"
                             class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}">
                             <i class="fas fa-users nav-icon"></i>
                             <span class="nav-text">Users</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.registrasi.index') }}"
+                            class="nav-link {{ request()->is('admin/registrasi*') ? 'active' : '' }}">
+                            <i class="fas fa-users nav-icon"></i>
+                            <span class="nav-text">Pendaftaran</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -75,6 +85,7 @@
                             <span class="nav-text">Aspirasi</span>
                         </a>
                     </li>
+                    @endif
                     <li class="nav-item">
                         <a href="{{ route('admin.events.index') }}"
                             class="nav-link {{ request()->is('admin/events*') ? 'active' : '' }}">
