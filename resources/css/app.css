@@ -1,12 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Ancizar+Serif:ital,wght@0,300..900;1,300..900&family=Inter:wght@100..900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Ancizar+Serif:ital,wght@0,300..900;1,300..900&family=Inter:wght@100..900&display=swap');
-
 .full-calendar-container {
     background: #fff;
     border-radius: 1rem;
-    box-shadow: 0 4px 24px 0 rgba(30, 41, 59, 0.10);
+    box-shadow: 0 4px 24px 0 rgba(30, 41, 59, 0.1);
     padding: 2rem 1rem;
     margin-bottom: 2rem;
     overflow-x: auto;
@@ -27,7 +27,8 @@
     transition: background 0.2s;
     box-shadow: 0 2px 8px 0 rgba(59, 130, 246, 0.08);
 }
-.fc-button:hover, .fc-button:focus {
+.fc-button:hover,
+.fc-button:focus {
     background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%);
     color: #fff;
 }

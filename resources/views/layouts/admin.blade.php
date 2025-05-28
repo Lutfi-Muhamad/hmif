@@ -19,10 +19,10 @@
                     <a href="/">
                         <img src="{{ asset('images/LOGO_HMIF.png') }}" alt="HMIF Logo">
                     </a>
-                        <button id="menu-toggle" class="menu-toggle">
-                            <i class="fas fa-bars"></i>
-                        </button>
-                    </div>
+                    <button id="menu-toggle" class="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
 
                 <div class="profile-dropdown">
                     <button id="profile-dropdown-toggle" class="profile-button">
@@ -54,6 +54,12 @@
         <div class="main-container">
             <!-- Sidebar -->
             <aside id="sidebar" class="sidebar">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">
+                        <i class="fas fa-arrow-left nav-icon"></i>
+                        <span class="nav-text">Kembali ke Beranda</span>
+                    </a>
+                </li>
                 <h6 class="section-title">MENU</h6>
                 <ul class="nav-menu">
                     <li class="nav-item">
@@ -63,28 +69,28 @@
                             <span class="nav-text">Dashboard</span>
                         </a>
                     </li>
-                    @if(auth()->user()->hasRole('superadmin'))                   
-                    <li class="nav-item">
-                        <a href="{{ route('admin.users.index') }}"
-                            class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}">
-                            <i class="fas fa-users nav-icon"></i>
-                            <span class="nav-text">Users</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('admin.registrasi.index') }}"
-                            class="nav-link {{ request()->is('admin/registrasi*') ? 'active' : '' }}">
-                            <i class="fas fa-users nav-icon"></i>
-                            <span class="nav-text">Pendaftaran</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('admin.aspirasi') }}"
-                            class="nav-link {{ request()->is('admin/aspirasi*') ? 'active' : '' }}">
-                            <i class="fas fa-comment-dots nav-icon"></i>
-                            <span class="nav-text">Aspirasi</span>
-                        </a>
-                    </li>
+                    @if (auth()->user()->hasRole('superadmin'))
+                        <li class="nav-item">
+                            <a href="{{ route('admin.users.index') }}"
+                                class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}">
+                                <i class="fas fa-users nav-icon"></i>
+                                <span class="nav-text">Users</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.registrasi.index') }}"
+                                class="nav-link {{ request()->is('admin/registrasi*') ? 'active' : '' }}">
+                                <i class="fas fa-users nav-icon"></i>
+                                <span class="nav-text">Pendaftaran</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.aspirasi') }}"
+                                class="nav-link {{ request()->is('admin/aspirasi*') ? 'active' : '' }}">
+                                <i class="fas fa-comment-dots nav-icon"></i>
+                                <span class="nav-text">Aspirasi</span>
+                            </a>
+                        </li>
                     @endif
                     <li class="nav-item">
                         <a href="{{ route('admin.events.index') }}"

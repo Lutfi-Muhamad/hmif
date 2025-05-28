@@ -174,8 +174,16 @@
 @endsection
 
 @section('content')
+    <!-- Flash Messages -->
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin: 10px;">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin: 10px;">
             {{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -272,8 +280,26 @@
             <div id="event-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 max-w-5xl mx-auto px-4">
                 @include('components.event-cards', ['events' => $events])
             </div>
-            <div class="mb-16"> {{-- Tambah margin-bottom besar --}}
-                <x-full-calendar :events="$calendarEvents" />
+            <!-- Calendar Section -->
+            <div class="mb-16 mt-16">
+                <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                    <!-- Calendar Header -->
+                    <div class="text-center mb-6">
+                        <div
+                            class="inline-flex items-center justify-center w-12 h-12 bg-blue-100 text-blue-600 rounded-full mb-4">
+                            <i class="fas fa-calendar-alt text-xl"></i>
+                        </div>
+                        <h3 class="text-gray-800 text-2xl md:text-3xl font-semibold mb-2">
+                            Kalender Event
+                        </h3>
+                        <p class="text-gray-600 text-base">
+                            Temukan tanggal dan jadwal event yang akan datang
+                        </p>
+                        <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mt-4 rounded-full"></div>
+                    </div>
+
+                    <x-full-calendar :events="$calendarEvents" />
+                </div>
             </div>
         </div>
     </div>

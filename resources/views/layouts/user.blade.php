@@ -54,6 +54,12 @@
         <div class="main-container">
             <!-- Sidebar -->
             <aside id="sidebar" class="sidebar">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">
+                        <i class="fas fa-arrow-left nav-icon"></i>
+                        <span class="nav-text">Kembali ke Beranda</span>
+                    </a>
+                </li>
                 <h6 class="section-title">MENU</h6>
                 <ul class="nav-menu">
                     <li class="nav-item">

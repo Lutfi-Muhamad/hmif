@@ -46,7 +46,7 @@ Route::get('/registrasi/create', [MemRecruitController::class, 'create'])->name(
 Route::post('/registrasi', [MemRecruitController::class, 'store'])->name('registrasi.store');
 
 // Aspirasi routes protected by auth and role middleware
-Route::middleware(['auth', 'role:hmif|admin|superadmin'])->group(function () {
+Route::middleware(['auth', 'role:hmif|admin|superadmin|user'])->group(function () {
     Route::get('/aspirasi', [HomeController::class, 'aspirasi'])->name('aspirasi');
     Route::post('/aspirasi', [HomeController::class, 'storeAspirasi'])->name('aspirasi.store');
     Route::get('/aspirasi/{id}/detail', [HomeController::class, 'detailAspirasi'])->name('aspirasi.detail');
@@ -76,7 +76,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin|superadmin'])->group(fun
 });
 
 // Rute user dan hmif 
-Route::prefix('user')->middleware(['auth', 'role:user|hmif'])->group(function () {
+Route::prefix('user')->middleware(['auth', 'role:hmif'])->group(function () {
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->middleware('auth')->name('user.dashboard');
 });
 
@@ -85,7 +85,7 @@ Route::get('/dashboard', function () {
     if (Auth::check()) {
         if (Auth::user()->hasAnyRole(['admin', 'superadmin'])) {
             return redirect()->route('admin.dashboard');
-        } elseif (Auth::user()->hasAnyRole(['user','hmif'])) {
+        } elseif (Auth::user()->hasAnyRole(['hmif'])) {
             return redirect()->route('user.dashboard');
         }
     }
@@ -107,31 +107,3 @@ Route::get('/team', function () {
 
 // API route for countdown
 Route::get('/api/registrasi/countdown', [MemRecruitController::class, 'getCountdown']);
-
-
-
-// artikel admin
-// use App\Http\Controllers\ArticlesController;
-
-// Route::get('/admin/dashboard', [ArticlesController::class, 'index'])->name('admin.dashboard');
-// Route::post('/admin/articles', [ArticlesController::class, 'store'])->name('admin.articles.store');
-
-// // Route untuk edit artikel
-// Route::get('/admin/articles/{article}/edit', [ArticlesController::class, 'edit'])->name('admin.articles.edit'); // Tampilkan form edit artikel
-
-// // Route untuk update artikel
-// Route::put('/admin/articles/{article}', [ArticlesController::class, 'update'])->name('admin.articles.update'); // Update artikel
-
-// // Route untuk hapus artikel
-// Route::delete('/admin/articles/{article}', [ArticlesController::class, 'destroy'])->name('admin.articles.destroy'); // Hapus artikel
-
-// // routes/web.php artikel show
-// Route::get('/articles/{id}', [ArticlesController::class, 'show'])->name('articles.show');
-
-// // rute tambahkan event
-// // routes/web.php
-
-// Route::post('/admin/events', [EventController::class, 'store'])->name('admin.events.store');
-
-// // untuk filter kategori
-// Route::get('/events/filter', [EventController::class, 'filter'])->name('events.filter');

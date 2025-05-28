@@ -9,7 +9,7 @@
     </title>
     <link rel="icon" href="{{ asset('images/LOGO_HMIF.png') }}" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         /* Advanced hover animations for navigation links */
@@ -138,7 +138,7 @@
                                     <a href="{{ route('team') }}"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
                                         tabindex="-1">Our Team</a>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -167,7 +167,7 @@
 
                         <!-- Aspirasi Link -->
                         @auth
-                            @if(auth()->user()->hasAnyRole(['admin', 'superadmin', 'hmif']))
+                            @if (auth()->user()->hasAnyRole(['admin', 'superadmin', 'hmif', 'user']))
                                 <a href="{{ route('aspirasi') }}"
                                     class="nav-link text-white text-base leading-[150%] font-medium relative group px-2 py-1 overflow-hidden {{ request()->is('aspirasi*') ? 'active' : '' }}">
                                     <span
@@ -259,30 +259,46 @@
                     </div>
 
                     @auth
-                        @if(auth()->user()->hasAnyRole(['admin', 'superadmin', 'hmif']))
+                        @if (auth()->user()->hasAnyRole(['admin', 'superadmin', 'hmif', 'user']))
                             <!-- Aspirasi -->
                             <div class="w-full relative mt-2">
                                 <a href="{{ route('aspirasi') }}"
-                                class="w-full text-left py-3 px-4 text-white text-base leading-[150%] font-normal relative overflow-hidden group flex items-center gap-2 rounded-lg border-solid border-[1.5px] border-transparent transition-all duration-300 {{ request()->is('aspirasi*') ? 'bg-[#136ca9]/40' : '' }}">
-                                <span class="relative z-10 group-hover:text-white">Aspirasi</span>
-                                <span
-                                class="absolute inset-0 bg-[#136ca9] transform origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100 -z-0"></span>
-                            </a>
+                                    class="w-full text-left py-3 px-4 text-white text-base leading-[150%] font-normal relative overflow-hidden group flex items-center gap-2 rounded-lg border-solid border-[1.5px] border-transparent transition-all duration-300 {{ request()->is('aspirasi*') ? 'bg-[#136ca9]/40' : '' }}">
+                                    <span class="relative z-10 group-hover:text-white">Aspirasi</span>
+                                    <span
+                                        class="absolute inset-0 bg-[#136ca9] transform origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100 -z-0"></span>
+                                </a>
                             </div>
                         @endif
                     @endauth
 
-                    
+
 
                     <!-- Login Button -->
                     <div class="flex flex-row gap-4 items-center justify-center w-full mt-6 mb-2">
                         @auth
-                            <a href="{{ auth()->user()->hasAnyRole(['admin', 'superadmin']) ? route('admin.dashboard') : route('dashboard') }}"
-                                class="relative overflow-hidden group border-[#2a2d47] flex flex-row gap-2 items-center justify-center px-5 py-2.5 rounded-full border-solid border-[1.5px] bg-[#f4efeb] text-[#2a2d47] text-base font-medium transition-colors duration-300 shadow-md w-full">
-                                <span class="relative z-10 group-hover:text-white">Dashboard</span>
-                                <span
-                                    class="absolute inset-0 bg-[#136ca9] transform origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100 -z-0"></span>
-                            </a>
+                            @if (auth()->user()->hasAnyRole(['admin', 'superadmin']))
+                                <a href="{{ route('admin.dashboard') }}"
+                                    class="relative overflow-hidden group border-[#2a2d47] flex flex-row gap-2 items-center justify-center px-5 py-2.5 rounded-full border-solid border-[1.5px] bg-[#f4efeb] text-[#2a2d47] text-base font-medium transition-colors duration-300 shadow-md w-full">
+                                    <span class="relative z-10 group-hover:text-white">Admin Dashboard</span>
+                                    <span
+                                        class="absolute inset-0 bg-[#136ca9] transform origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100 -z-0"></span>
+                                </a>
+                            @elseif(auth()->user()->hasAnyRole(['hmif']))
+                                <a href="{{ route('dashboard') }}"
+                                    class="relative overflow-hidden group border-[#2a2d47] flex flex-row gap-2 items-center justify-center px-5 py-2.5 rounded-full border-solid border-[1.5px] bg-[#f4efeb] text-[#2a2d47] text-base font-medium transition-colors duration-300 shadow-md w-full">
+                                    <span class="relative z-10 group-hover:text-white">Dashboard</span>
+                                    <span
+                                        class="absolute inset-0 bg-[#136ca9] transform origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100 -z-0"></span>
+                                </a>
+                            @else
+                                <a href=""
+                                    class="relative overflow-hidden group border-[#2a2d47] flex flex-row gap-2 items-center justify-center px-5 py-2.5 rounded-full border-solid border-[1.5px] bg-[#f4efeb] text-[#2a2d47] text-base font-medium transition-colors duration-300 shadow-md w-full">
+                                    <span class="relative z-10 group-hover:text-white">HELLO</span>
+                                    <span
+                                        class="absolute inset-0 bg-[#136ca9] transform origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100 -z-0"></span>
+                                </a>
+                            @endif
                         @else
                             <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
                                 class="relative overflow-hidden group border-[#2a2d47] flex flex-row gap-2 items-center justify-center px-5 py-2.5 rounded-full border-solid border-[1.5px] bg-[#f4efeb] text-[#2a2d47] text-base font-medium transition-colors duration-300 shadow-md w-full">
@@ -298,14 +314,43 @@
             <!-- Desktop Login Button -->
             <div class="hidden md:flex flex-row gap-4 items-center">
                 @auth
-                    <a href="{{ auth()->user()->role == 'admin' ? route('admin.dashboard') : route('dashboard') }}"
-                        class="relative overflow-hidden group flex items-center justify-center px-5 py-2 rounded-full border-solid border-[1.5px] border-[#2a2d47] bg-[#f4efeb] text-[#2a2d47] text-base font-medium transition-all duration-300 shadow-md">
-                        <span class="relative z-10 group-hover:text-white transition-colors duration-300">Dashboard</span>
-                        <span
-                            class="absolute inset-0 bg-[#136ca9] transform origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100"></span>
-                        <span
-                            class="absolute -inset-x-2 -inset-y-2 opacity-0 group-hover:opacity-20 transition-opacity duration-300 bg-gradient-to-r from-transparent via-white to-transparent blur-sm"></span>
-                    </a>
+                    @if (auth()->user()->hasAnyRole(['admin', 'superadmin']))
+                        <a href="{{ route('admin.dashboard') }}"
+                            class="relative overflow-hidden group flex items-center justify-center px-5 py-2 rounded-full border-solid border-[1.5px] border-[#2a2d47] bg-[#f4efeb] text-[#2a2d47] text-base font-medium transition-all duration-300 shadow-md">
+                            <span class="relative z-10 group-hover:text-white transition-colors duration-300">Admin
+                                Dashboard</span>
+                            <span
+                                class="absolute inset-0 bg-[#136ca9] transform origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100"></span>
+                            <span
+                                class="absolute -inset-x-2 -inset-y-2 opacity-0 group-hover:opacity-20 transition-opacity duration-300 bg-gradient-to-r from-transparent via-white to-transparent blur-sm"></span>
+                        </a>
+                    @elseif(in_array(auth()->user()->role, ['hmif']))
+                        <a href="{{ route('dashboard') }}"
+                            class="relative overflow-hidden group flex items-center justify-center px-5 py-2 rounded-full border-solid border-[1.5px] border-[#2a2d47] bg-[#f4efeb] text-[#2a2d47] text-base font-medium transition-all duration-300 shadow-md">
+                            <span
+                                class="relative z-10 group-hover:text-white transition-colors duration-300">Dashboard</span>
+                            <span
+                                class="absolute inset-0 bg-[#136ca9] transform origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100"></span>
+                            <span
+                                class="absolute -inset-x-2 -inset-y-2 opacity-0 group-hover:opacity-20 transition-opacity duration-300 bg-gradient-to-r from-transparent via-white to-transparent blur-sm"></span>
+                        </a>
+                    @else
+                        <form action="{{ route('logout') }}" method="POST" class="inline-block"
+                            onsubmit="return confirm('Apakah Anda yakin ingin keluar?')">
+                            @csrf
+                            <button type="submit"
+                                class="relative overflow-hidden group flex items-center justify-center px-5 py-2 rounded-full border-solid border-[1.5px] border-[#2a2d47] bg-[#f4efeb] text-[#2a2d47] text-base font-medium transition-all duration-300 shadow-md cursor-pointer">
+                                <span class="relative z-10 group-hover:text-white transition-colors duration-300">
+                                    {{ auth()->user()->role == 'user' ? 'Logout' : 'Keluar' }}
+                                </span>
+                                <span
+                                    class="absolute inset-0 bg-[#136ca9] transform origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100"></span>
+                                <span
+                                    class="absolute -inset-x-2 -inset-y-2 opacity-0 group-hover:opacity-20 transition-opacity duration-300 bg-gradient-to-r from-transparent via-white to-transparent blur-sm"></span>
+                            </button>
+                        </form>
+                    @endif
+                    {{-- Role USER tidak ada tombol dashboard --}}
                 @else
                     <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
                         class="relative overflow-hidden group flex items-center justify-center px-5 py-2 rounded-full border-solid border-[1.5px] border-[#2a2d47] bg-[#f4efeb] text-[#2a2d47] text-base font-medium transition-all duration-300 shadow-md hover:border-[#136ca9]">
@@ -390,7 +435,7 @@
                             <a href="{{ route('team') }}"
                                 class="text-white text-xs md:text-sm leading-[150%] font-normal hover:text-[#f4efeb] transition-colors duration-200 pl-2 truncate">Our
                                 Team</a>
-                            
+
                         </div>
                     </div>
 
