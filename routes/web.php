@@ -17,14 +17,7 @@ use App\Http\Controllers\MemRecruitController;
 use App\Models\Article;
 
 
-// Route::get('/', function () {
-//     // Mengambil artikel terbaru
-//     $articles = Article::latest()->get();
 
-//     // Menampilkan view dengan artikel yang dikirim
-//     return view('welcome', compact('articles'));
-// })->name('home');
-// Redirect /login ke / dengan flash session untuk menampilkan modal login
 Route::get('/login', function () {
     return redirect()->route('home')->with('show_login_modal', true);
 })->name('login.redirect');

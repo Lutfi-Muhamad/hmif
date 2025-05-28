@@ -8,6 +8,9 @@ use App\Models\Aspirasi;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
@@ -25,64 +28,207 @@ class HomeController extends Controller
             ->take(4)
             ->get();
 
-        // Ambil SEMUA event untuk kalender (bisa filter status jika mau)
+        // Ambil SEMUA event untuk kalender dari database
         $calendarEvents = Event::orderBy('event_date', 'asc')->get()->map(function($event) {
             return [
+                'id' => 'event_' . $event->id,
                 'title' => $event->title,
                 'start' => $event->event_date,
                 'end' => $event->event_date,
+                'url' => route('events.detail', $event->id),
+                'color' => $this->getEventColor($event->category),
+                'textColor' => '#ffffff',
                 'extendedProps' => [
+                    'type' => 'hmif_event',
                     'status' => $event->status,
                     'location' => $event->location,
+                    'category' => $event->category,
                 ],
             ];
+        })->toArray();
+
+        // Ambil hari libur dari Google Calendar (cached untuk 1 hari)
+        $holidays = Cache::remember('google_holidays', 60 * 24, function () {
+            return $this->getGoogleHolidays();
         });
 
-        return view('welcome', compact('articles', 'events', 'calendarEvents'));
+        // Gabungkan event dan hari libur
+        $allCalendarEvents = array_merge($calendarEvents, $holidays);
+
+        return view('welcome', compact('articles', 'events', 'allCalendarEvents'));
+    }
+
+    /**
+     * Get holidays from Google Calendar API
+     */
+    private function getGoogleHolidays()
+{
+    try {
+        $apiKey = "AIzaSyDOtGM5jr8bNp1utVpG2_gSRH03RNGBkI8";
+        
+        if (!$apiKey) {
+            Log::warning('Google API Key not found, using fallback holidays');
+            return $this->getFallbackHolidays();
+        }
+
+        $calendarIds = [
+            'en.indonesian#holiday@group.v.calendar.google.com',
+            'id.indonesian#holiday@group.v.calendar.google.com',
+            'indonesian__id@holiday.calendar.google.com'
+        ];
+
+        $baseUrl = 'https://www.googleapis.com/calendar/v3';
+        $params = [
+            'key' => $apiKey,
+            'timeMin' => now()->startOfYear()->toISOString(),
+            'timeMax' => now()->endOfYear()->toISOString(),
+            'singleEvents' => 'true',
+            'orderBy' => 'startTime',
+            'maxResults' => 50,
+            'timeZone' => 'Asia/Jakarta'
+        ];
+
+        foreach ($calendarIds as $calendarId) {
+            $response = Http::timeout(15)->retry(2, 1000)
+                ->get("{$baseUrl}/calendars/" . urlencode($calendarId) . "/events", $params);
+
+            if ($response->successful()) {
+                $data = $response->json();
+                
+                if (!empty($data['items'])) {
+                    Log::info("Holidays fetched from: {$calendarId}");
+                    
+                    // Format events langsung di sini
+                    $holidays = [];
+                    foreach ($data['items'] as $event) {
+                        $start = $event['start'];
+                        $date = $start['date'] ?? substr($start['dateTime'], 0, 10);
+                        
+                        // Skip old events
+                        if (Carbon::parse($date)->lt(now()->subMonth())) continue;
+                        
+                        $title = trim($event['summary']);
+                        
+                        // Add emoji dan color logic langsung
+                        $emoji = '🎉';
+                        $color = '#dc2626';
+                        
+                        if (stripos($title, 'cuti') !== false) {
+                            $emoji = '📅'; $color = '#f59e0b';
+                        } elseif (stripos($title, 'tahun baru') !== false) {
+                            $emoji = '🎊';
+                        } elseif (stripos($title, 'natal') !== false) {
+                            $emoji = '🎄';
+                        } elseif (stripos($title, 'idul') !== false) {
+                            $emoji = stripos($title, 'fitri') !== false ? '🌙' : '🕌';
+                            $color = '#16a34a';
+                        } elseif (stripos($title, 'kemerdekaan') !== false) {
+                            $emoji = '🇮🇩';
+                        } elseif (stripos($title, 'buruh') !== false) {
+                            $emoji = '⚒️';
+                        } elseif (stripos($title, 'pancasila') !== false) {
+                            $emoji = '🌟';
+                        } elseif (stripos($title, 'waisak') !== false) {
+                            $emoji = '🏮';
+                        } elseif (stripos($title, 'nyepi') !== false) {
+                            $emoji = '🕯️';
+                        } elseif (stripos($title, 'paskah') !== false) {
+                            $emoji = '🐣';
+                        }
+                        
+                        $holidays[] = [
+                            'id' => 'holiday_' . $event['id'],
+                            'title' => $emoji . ' ' . $title,
+                            'start' => $date,
+                            'allDay' => true,
+                            'color' => $color,
+                            'textColor' => '#ffffff',
+                            'display' => 'background',
+                            'extendedProps' => [
+                                'type' => 'holiday',
+                                'status' => 'holiday',
+                                'description' => $event['description'] ?? 'Hari Libur Nasional',
+                                'source' => 'google_calendar'
+                            ]
+                        ];
+                    }
+                    
+                    return $holidays;
+                }
+            } else {
+                Log::warning("Failed calendar {$calendarId}: " . $response->status());
+            }
+        }
+        
+        return $this->getFallbackHolidays();
+        
+    } catch (\Exception $e) {
+        Log::error('Google Calendar API Error: ' . $e->getMessage());
+        return $this->getFallbackHolidays();
+    }
+}
+
+// Caching method (keep this karena berguna)
+private function getCachedHolidays()
+{
+    return Cache::remember('google_holidays_' . now()->year, now()->addDays(7), function () {
+        return $this->getGoogleHolidays();
+    });
+}
+    /**
+     * Get event color based on category
+     */
+    private function getEventColor($category)
+    {
+        return match($category) {
+            'A' => '#3b82f6', // Blue for LOMBA
+            'B' => '#10b981', // Green for WEBINAR  
+            'C' => '#f59e0b', // Yellow for MEETUP
+            default => '#6b7280' // Gray for others
+        };
     }
     
     /**
      * Menampilkan detail artikel
      */
     public function showArticle($id)
-{
-    $article = Article::findOrFail($id);
-    
-    // Get related articles (excluding current article)
-    $relatedArticles = Article::where('id', '!=', $id)
-                            ->latest()
-                            ->take(4)
-                            ->get();
-    
-    return view('artikel-detail', compact('article', 'relatedArticles'));
-}
+    {
+        $article = Article::findOrFail($id);
+        
+        // Get related articles (excluding current article)
+        $relatedArticles = Article::where('id', '!=', $id)
+                                ->latest()
+                                ->take(4)
+                                ->get();
+        
+        return view('artikel-detail', compact('article', 'relatedArticles'));
+    }
 
-
-public function articleIndex(Request $request){
-     // Build the query
-        $articlesQuery = Article::query()->latest();
+    public function articleIndex(Request $request){
+         // Build the query
+            $articlesQuery = Article::query()->latest();
+            
+            // Apply search filter if provided
+            if ($request->has('search') && $request->search != '') {
+                $search = $request->search;
+                $articlesQuery->where(function($query) use ($search) {
+                    $query->where('title', 'like', "%{$search}%")
+                          ->orWhere('content', 'like', "%{$search}%");
+                });
+            }
+            
+            // Apply category filter if provided
+            if ($request->has('category') && $request->category != '') {
+                $articlesQuery->where('category', $request->category);
+            }
+            
+            // Get paginated results
+            $articles = $articlesQuery->paginate(9);
+            
+            // Return view with data
+            return view('artikel', compact('articles'));
+    }
         
-        // Apply search filter if provided
-        if ($request->has('search') && $request->search != '') {
-            $search = $request->search;
-            $articlesQuery->where(function($query) use ($search) {
-                $query->where('title', 'like', "%{$search}%")
-                      ->orWhere('content', 'like', "%{$search}%");
-            });
-        }
-        
-        // Apply category filter if provided
-        if ($request->has('category') && $request->category != '') {
-            $articlesQuery->where('category', $request->category);
-        }
-        
-        // Get paginated results
-        $articles = $articlesQuery->paginate(9);
-        
-        // Return view with data
-        return view('artikel', compact('articles'));
-}
-    
     /**
      * Filter event berdasarkan kategori via AJAX
      */
@@ -106,7 +252,6 @@ public function articleIndex(Request $request){
             'html' => view('components.event-cards', compact('events'))->render()
         ]);
     }
-
 
     /**
      * Display a listing of events.
@@ -228,17 +373,15 @@ public function articleIndex(Request $request){
     }
 
     public function detailAspirasi($id)
-{
-    $aspirasi = Aspirasi::findOrFail($id);
-    return response()->json($aspirasi); // Return data dalam bentuk JSON agar bisa digunakan di frontend
-}
+    {
+        $aspirasi = Aspirasi::findOrFail($id);
+        return response()->json($aspirasi); // Return data dalam bentuk JSON agar bisa digunakan di frontend
+    }
 
-
-
-     public function reloadCaptcha()
-{
-    return response()->json([
-        'captcha' => captcha_src('math')
-    ]);
-}
+    public function reloadCaptcha()
+    {
+        return response()->json([
+            'captcha' => captcha_src('math')
+        ]);
+    }
 }

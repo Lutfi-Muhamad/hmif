@@ -280,26 +280,35 @@
             <div id="event-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 max-w-5xl mx-auto px-4">
                 @include('components.event-cards', ['events' => $events])
             </div>
-            <!-- Calendar Section -->
+            <!-- Update bagian kalender -->
             <div class="mb-16 mt-16">
-                <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
-                    <!-- Calendar Header -->
-                    <div class="text-center mb-6">
-                        <div
-                            class="inline-flex items-center justify-center w-12 h-12 bg-blue-100 text-blue-600 rounded-full mb-4">
-                            <i class="fas fa-calendar-alt text-xl"></i>
-                        </div>
-                        <h3 class="text-gray-800 text-2xl md:text-3xl font-semibold mb-2">
-                            Kalender Event
-                        </h3>
-                        <p class="text-gray-600 text-base">
-                            Temukan tanggal dan jadwal event yang akan datang
-                        </p>
-                        <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mt-4 rounded-full"></div>
-                    </div>
-
-                    <x-full-calendar :events="$calendarEvents" />
+                <!-- Calendar Header -->
+                <div class="flex flex-col gap-4 items-center justify-center mb-8">
+                    <span class="text-blue-600 text-center text-base leading-[150%] font-semibold">Event Schedule</span>
+                    <h3
+                        class="text-gray-800 text-center text-2xl md:text-3xl leading-[120%] tracking-[-0.01em] font-normal">
+                        Kalender Event & Hari Libur
+                    </h3>
+                    <p class="text-gray-600 text-center text-base leading-[150%] font-normal">
+                        Lihat jadwal lengkap event HMIF dan hari libur nasional
+                    </p>
                 </div>
+
+                <!-- Legend -->
+                <div class="flex justify-center mb-6">
+                    <div class="flex flex-wrap gap-4 text-sm">
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 bg-blue-500 rounded"></div>
+                            <span>Event HMIF</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 bg-red-500 rounded"></div>
+                            <span>Hari Libur</span>
+                        </div>
+                    </div>
+                </div>
+
+                <x-full-calendar :events="$allCalendarEvents" />
             </div>
         </div>
     </div>
