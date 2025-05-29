@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('detail');
-            $table->enum('category', ['A', 'B', 'C']);
+            $table->enum('category', ['LOMBA', 'WEBINAR', 'MEETUP']);
             $table->string('image')->nullable();
             $table->timestamps();
         });

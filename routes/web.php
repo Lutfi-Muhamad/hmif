@@ -29,7 +29,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // Rute untuk artikel
 Route::get('/articles/{id}', [HomeController::class, 'showArticle'])->name('articles.detail');
 Route::get('/articles', [HomeController::class, 'articleIndex'])->name('articles.index');
-Route::get('/events/filter', [HomeController::class, 'filterEvents'])->name('events.filter');
+Route::get('/events/filter', [EventController::class, 'filter'])->name('events.filter');
 Route::get('/events', [HomeController::class, 'events'])->name('events.index');
 Route::get('/events/{event}', [HomeController::class, 'eventDetail'])->name('events.detail');
 

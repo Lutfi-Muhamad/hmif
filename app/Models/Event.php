@@ -18,23 +18,22 @@ class Event extends Model
         'status'         
     ];
 
-    // Konversi otomatis string tanggal menjadi objek Carbon
     protected $dates = [
         'created_at',
         'updated_at',
         'event_date',
     ];
-    
-    // Kategori mapping
+
+    // ENUM kategori event
     public const CATEGORIES = [
-        'A' => 'LOMBA',
-        'B' => 'WEBINAR',
-        'C' => 'MEETUP'
+        'LOMBA' => 'Lomba',
+        'WEBINAR' => 'Webinar',
+        'MEETUP' => 'Meetup'
     ];
-    
-    // Mendapatkan nama kategori yang sesuai
-    public function getCategoryNameAttribute()
+
+    // Opsional: tampilkan kategori dengan huruf kapital depan
+    public function getFormattedCategoryAttribute()
     {
-        return self::CATEGORIES[$this->category] ?? $this->category;
+        return ucfirst(strtolower($this->category));
     }
 }

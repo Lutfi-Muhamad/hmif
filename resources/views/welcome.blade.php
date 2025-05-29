@@ -259,15 +259,15 @@
                             class="px-3 py-2 rounded-full text-sm font-medium text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 transition-all duration-200">
                             Semua Event
                         </button>
-                        <button onclick="filterEvents('A')"
+                        <button onclick="filterEvents('LOMBA')"
                             class="px-3 py-2 rounded-full text-sm font-medium text-gray-500 hover:text-white hover:bg-gradient-to-r hover:from-blue-400 hover:to-blue-500 transition-all duration-200">
                             LOMBA
                         </button>
-                        <button onclick="filterEvents('B')"
+                        <button onclick="filterEvents('WEBINAR')"
                             class="px-3 py-2 rounded-full text-sm font-medium text-gray-500 hover:text-white hover:bg-gradient-to-r hover:from-blue-400 hover:to-blue-500 transition-all duration-200">
                             WEBINAR
                         </button>
-                        <button onclick="filterEvents('C')"
+                        <button onclick="filterEvents('MEETUP')"
                             class="px-3 py-2 rounded-full text-sm font-medium text-gray-500 hover:text-white hover:bg-gradient-to-r hover:from-blue-400 hover:to-blue-500 transition-all duration-200">
                             MEETUP
                         </button>
@@ -276,10 +276,34 @@
             </div>
 
 
+
             <!-- Improved Event Grid -->
-            <div id="event-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 max-w-5xl mx-auto px-4">
+            {{-- <div id="event-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 max-w-5xl mx-auto px-4">
                 @include('components.event-cards', ['events' => $events])
+            </div> --}}
+
+            <div class="overflow-hidden relative">
+                <div id="event-slider" class="flex overflow-x-auto overflow-y-hidden snap-x snap-mandatory space-x-4 px-4">
+                    @foreach ($events as $event)
+                        <div class="snap-start shrink-0 w-[90%] sm:w-[48%] md:w-[32%]">
+                            @include('components.event-card', ['event' => $event])
+                        </div>
+                    @endforeach
+                </div>
+
+
+                {{-- Tombol navigasi slider (akan disembunyikan kalau event kurang dari 4) --}}
+                <button id="prevBtn"
+                    class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white shadow-md px-3 py-2 rounded-full z-10 hidden">
+                    &#8592;
+                </button>
+                <button id="nextBtn"
+                    class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white shadow-md px-3 py-2 rounded-full z-10 hidden">
+                    &#8594;
+                </button>
             </div>
+
+
             <!-- Update bagian kalender -->
             <div class="mb-16 mt-16">
                 <!-- Calendar Header -->
@@ -520,18 +544,108 @@
         function filterEvents(category) {
             let url = "{{ route('events.filter') }}";
             if (category) {
-                url += '?category=' + category;
+                url += '?category=' + encodeURIComponent(category);
             }
 
             fetch(url)
                 .then(res => res.json())
                 .then(data => {
-                    document.getElementById('event-list').innerHTML = data.html;
+                    // Update isi slider dengan html baru
+                    document.getElementById('event-slider').innerHTML = data.html;
+
+                    // Cek jumlah item slide
+                    const slides = document.querySelectorAll('#event-slider > div');
+                    const prevBtn = document.getElementById('prevBtn');
+                    const nextBtn = document.getElementById('nextBtn');
+
+                    if (slides.length < 4) {
+                        // Jika kurang dari 4, sembunyikan tombol navigasi
+                        prevBtn.classList.add('hidden');
+                        nextBtn.classList.add('hidden');
+                    } else {
+                        prevBtn.classList.remove('hidden');
+                        nextBtn.classList.remove('hidden');
+                    }
+
+                    // Reset scroll posisi slider ke kiri
+                    const slider = document.getElementById('event-slider');
+                    slider.scrollLeft = 0;
                 })
                 .catch(err => {
                     console.error('Error:', err);
                 });
         }
+
+        // Navigasi slider prev/next
+        document.addEventListener('DOMContentLoaded', () => {
+            const slider = document.getElementById('event-slider');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            if (!slider || !prevBtn || !nextBtn) return;
+
+            prevBtn.addEventListener('click', () => {
+                // Scroll kiri sebesar 1 item (lebar item + gap)
+                const slideWidth = slider.querySelector('div').offsetWidth + 16; // 16 = gap 4 dalam px
+                slider.scrollBy({
+                    left: -slideWidth,
+                    behavior: 'smooth'
+                });
+            });
+
+            nextBtn.addEventListener('click', () => {
+                const slideWidth = slider.querySelector('div').offsetWidth + 16;
+                slider.scrollBy({
+                    left: slideWidth,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Cek awal apakah tombol harus tampil/hidden saat load awal
+            const slides = slider.querySelectorAll('div');
+            if (slides.length < 4) {
+                prevBtn.classList.add('hidden');
+                nextBtn.classList.add('hidden');
+            } else {
+                prevBtn.classList.remove('hidden');
+                nextBtn.classList.remove('hidden');
+            }
+        });
+
+
+
+        // Slider functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.getElementById('event-slider');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            const cardCount = slider.children.length;
+
+            // Jika lebih dari 3 event, aktifkan tombol panah
+            if (cardCount > 3) {
+                prevBtn.classList.remove('hidden');
+                nextBtn.classList.remove('hidden');
+            }
+
+            let scrollAmount = 0;
+            const scrollStep = slider.offsetWidth * 0.35; // geser sekitar 1 kartu per klik
+
+            nextBtn.addEventListener('click', function() {
+                slider.scrollBy({
+                    left: scrollStep,
+                    behavior: 'smooth'
+                });
+            });
+
+            prevBtn.addEventListener('click', function() {
+                slider.scrollBy({
+                    left: -scrollStep,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
 
         // Toggle password visibility
         document.addEventListener('DOMContentLoaded', function() {

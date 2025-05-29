@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('style')
+{{-- @section('style')
     <style>
         /* Category badge colors */
         .category-lomba {
@@ -52,7 +52,7 @@
             transform: scale(1.05);
         }
     </style>
-@endsection
+@endsection --}}
 
 @section('content')
     <!-- Event Detail Section -->
@@ -265,19 +265,27 @@
                         <div class="bg-gray-50 rounded-lg p-5">
                             <h2 class="text-lg font-semibold text-gray-800 mb-4">Info Event</h2>
 
-                            <!-- Countdown or Status -->
                             @php
                                 $now = \Carbon\Carbon::now();
                                 $eventDate = \Carbon\Carbon::parse($event->event_date);
-                                $daysLeft = $now->diffInDays($eventDate, false);
+
+                                // hitung selisih hari dengan pembulatan ke atas supaya misal 0.8 hari jadi 1 hari
+                                $daysLeft = $now->diffInDays($eventDate, false); // ini integer, bisa negatif
+
+                                // Kalau ingin menghitung termasuk waktu dan membulatkan ke atas bisa gunakan diffInHours lalu dibagi 24
+                                $hoursLeft = $now->diffInHours($eventDate, false);
+                                $daysLeftWithDecimal = $hoursLeft / 24;
+
+                                // Bisa juga pakai ceil supaya pembulatan ke atas
+                                $daysLeftRounded = (int) ceil($daysLeftWithDecimal);
                             @endphp
 
-                            @if ($daysLeft > 0)
+                            @if ($daysLeftRounded > 0)
                                 <div class="bg-indigo-50 rounded-lg p-3 mb-4 text-center">
                                     <p class="text-sm text-indigo-600 font-medium">Event akan dimulai dalam</p>
-                                    <p class="text-2xl font-bold text-indigo-700">{{ $daysLeft }} hari</p>
+                                    <p class="text-2xl font-bold text-indigo-700">{{ $daysLeftRounded }} hari</p>
                                 </div>
-                            @elseif($daysLeft == 0)
+                            @elseif($daysLeftRounded == 0)
                                 <div class="bg-green-50 rounded-lg p-3 mb-4 text-center">
                                     <p class="text-sm text-green-600 font-medium">Event berlangsung</p>
                                     <p class="text-2xl font-bold text-green-700">Hari Ini</p>
@@ -285,9 +293,11 @@
                             @else
                                 <div class="bg-gray-50 rounded-lg p-3 mb-4 text-center">
                                     <p class="text-sm text-gray-600 font-medium">Event telah selesai</p>
-                                    <p class="text-2xl font-bold text-gray-700">{{ abs($daysLeft) }} hari yang lalu</p>
+                                    <p class="text-2xl font-bold text-gray-700">{{ abs($daysLeftRounded) }} hari yang lalu
+                                    </p>
                                 </div>
                             @endif
+
 
                             <!-- Action Button -->
                             @if ($daysLeft >= 0)

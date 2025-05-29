@@ -162,15 +162,15 @@
                         class="px-4 py-2 rounded-full text-sm font-medium {{ !request('category') ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }} transition duration-200">
                         Semua
                     </a>
-                    <a href="{{ route('events.index', ['category' => 'A']) }}"
+                    <a href="{{ route('events.index', ['category' => 'LOMBA']) }}"
                         class="px-4 py-2 rounded-full text-sm font-medium {{ request('category') == 'A' ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }} transition duration-200">
                         Lomba
                     </a>
-                    <a href="{{ route('events.index', ['category' => 'B']) }}"
+                    <a href="{{ route('events.index', ['category' => 'WEBINAR']) }}"
                         class="px-4 py-2 rounded-full text-sm font-medium {{ request('category') == 'B' ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }} transition duration-200">
                         Webinar
                     </a>
-                    <a href="{{ route('events.index', ['category' => 'C']) }}"
+                    <a href="{{ route('events.index', ['category' => 'MEETUP']) }}"
                         class="px-4 py-2 rounded-full text-sm font-medium {{ request('category') == 'C' ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }} transition duration-200">
                         Meetup
                     </a>
